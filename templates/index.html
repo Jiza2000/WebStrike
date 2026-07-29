@@ -18,24 +18,27 @@ WebStrike
 
     <hr class="my-4">
 
-    <form>
 
-        <div class="row justify-content-center">
+        <form action="/scan" method="POST">
 
-            <div class="col-md-8">
+    <div class="row justify-content-center">
 
-                <input
-                    type="text"
-                    class="form-control form-control-lg"
-                    placeholder="https://example.com">
+        <div class="col-md-8">
 
-            </div>
+            <input
+                type="text"
+                class="form-control form-control-lg"
+                name="target"
+                placeholder="https://example.com"
+                required>
 
         </div>
 
-        <button class="btn btn-danger btn-lg mt-4">
-            Start Scan
-        </button>
+    </div>
+
+    <button class="btn btn-danger btn-lg mt-4">
+        Start Scan
+       </button>
 
     </form>
 

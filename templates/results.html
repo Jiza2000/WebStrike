@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+
+{% block title %}
+Scan Results
+{% endblock %}
+
+{% block content %}
+
+<div class="text-center">
+
+    <h1 class="mb-4">Scan Results</h1>
+
+    {% if error %}
+
+        <div class="alert alert-danger">
+            {{ error }}
+        </div>
+
+    {% else %}
+
+        <div class="card bg-dark border-danger text-light">
+
+            <div class="card-body">
+
+                <h4>Target</h4>
+                <p>{{ results.target }}</p>
+
+                <h4>Resolved IP</h4>
+                <p>{{ results.ip }}</p>
+
+            </div>
+
+        </div>
+
+    {% endif %}
+
+    <a href="/" class="btn btn-secondary mt-4">
+        Back
+    </a>
+
+</div>
+
+{% endblock %}
