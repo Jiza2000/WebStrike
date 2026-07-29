@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+
+{% block title %}
+WebStrike
+{% endblock %}
+
+{% block content %}
+
+<div class="text-center">
+
+    <h1 class="display-3 fw-bold">
+        WebStrike
+    </h1>
+
+    <p class="lead mt-3">
+        Professional Web Application Security Assessment Framework
+    </p>
+
+    <hr class="my-4">
+
+    <form>
+
+        <div class="row justify-content-center">
+
+            <div class="col-md-8">
+
+                <input
+                    type="text"
+                    class="form-control form-control-lg"
+                    placeholder="https://example.com">
+
+            </div>
+
+        </div>
+
+        <button class="btn btn-danger btn-lg mt-4">
+            Start Scan
+        </button>
+
+    </form>
+
+</div>
+
+{% endblock %}

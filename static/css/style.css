@@ -1,0 +1,27 @@
+body{
+    background:#121212;
+}
+
+.navbar{
+    border-bottom:2px solid #dc3545;
+}
+
+.display-3{
+    margin-top:60px;
+    font-weight:bold;
+}
+
+.form-control{
+    background:#1d1d1d;
+    color:white;
+    border:1px solid #555;
+}
+
+.form-control:focus{
+    background:#1d1d1d;
+    color:white;
+}
+
+.btn-danger{
+    padding:12px 40px;
+}
