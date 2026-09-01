@@ -19,6 +19,13 @@ def validate_target(url):
 
     return url
 
+def get_hostname(url):
+    """
+    Extract hostname from URL.
+    """
+
+    return urlparse(url).hostname
+
 
 def resolve_ip(url):
     """

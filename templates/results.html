@@ -6,9 +6,9 @@ Scan Results
 
 {% block content %}
 
-<div class="text-center">
+<div class="container-fluid text-light">
 
-    <h1 class="mb-4">Scan Results</h1>
+    <h1 class="text-center mb-5">Scan Results</h1>
 
     {% if error %}
 
@@ -18,25 +18,385 @@ Scan Results
 
     {% else %}
 
-        <div class="card bg-dark border-danger text-light">
+        <!-- TARGET INFORMATION -->
+
+        <div class="card bg-dark border-danger text-light mb-4">
 
             <div class="card-body">
 
-                <h4>Target</h4>
-                <p>{{ results.target }}</p>
+                <h3 class="text-danger">Target Information</h3>
 
-                <h4>Resolved IP</h4>
-                <p>{{ results.ip }}</p>
+                <p>
+                    <strong>Target:</strong>
+                    {{ results.target }}
+                </p>
+
+                <p>
+                    <strong>Resolved IP:</strong>
+                    {{ results.ip }}
+                </p>
 
             </div>
 
         </div>
 
+
+        <!-- PORT SCAN -->
+
+        <div class="card bg-dark border-danger text-light mb-4">
+
+            <div class="card-body">
+
+                <h3 class="text-danger">Port Scan Results</h3>
+
+                {% if results.ports %}
+
+                    <table class="table table-dark table-bordered">
+
+                        <thead>
+                            <tr>
+                                <th>Port</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+
+                            {% for port, status in results.ports.items() %}
+
+                                <tr>
+                                    <td>{{ port }}</td>
+                                    <td>{{ status }}</td>
+                                </tr>
+
+                            {% endfor %}
+
+                        </tbody>
+
+                    </table>
+
+                {% else %}
+
+                    <p>No port scan results available.</p>
+
+                {% endif %}
+
+            </div>
+
+        </div>
+
+
+        <!-- SERVICES -->
+
+        <div class="card bg-dark border-danger text-light mb-4">
+
+            <div class="card-body">
+
+                <h3 class="text-danger">Service Detection</h3>
+
+                {% if results.services %}
+
+                    {% for port, service in results.services.items() %}
+
+                        <h4 class="mt-4">
+                            Port {{ port }}
+                        </h4>
+
+                        <table class="table table-dark table-bordered">
+
+                            <tr>
+                                <th>Service</th>
+                                <td>{{ service.service }}</td>
+                            </tr>
+
+                            <tr>
+                                <th>Server</th>
+                                <td>{{ service.server or "Unknown" }}</td>
+                            </tr>
+
+                            <tr>
+                                <th>Version</th>
+                                <td>{{ service.version }}</td>
+                            </tr>
+
+                        </table>
+
+                        {% if service.cves %}
+
+                            <h5 class="text-warning">
+                                Known CVEs
+                            </h5>
+
+                            <table class="table table-dark table-bordered">
+
+                                <thead>
+                                    <tr>
+                                        <th>CVE</th>
+                                        <th>CVSS</th>
+                                        <th>Severity</th>
+                                    </tr>
+                                </thead>
+
+                                <tbody>
+
+                                    {% for cve in service.cves %}
+
+                                        <tr>
+                                            <td>{{ cve.id }}</td>
+                                            <td>{{ cve.cvss_score }}</td>
+                                            <td>{{ cve.severity }}</td>
+                                        </tr>
+
+                                    {% endfor %}
+
+                                </tbody>
+
+                            </table>
+
+                        {% else %}
+
+                            <p>No known CVEs detected for this service.</p>
+
+                        {% endif %}
+
+                    {% endfor %}
+
+                {% else %}
+
+                    <p>No services detected.</p>
+
+                {% endif %}
+
+            </div>
+
+        </div>
+
+
+        <!-- HTTP SECURITY HEADERS -->
+
+        <div class="card bg-dark border-danger text-light mb-4">
+
+            <div class="card-body">
+
+                <h3 class="text-danger">HTTP Security Headers</h3>
+
+                <table class="table table-dark table-bordered">
+
+                    <tr>
+                        <th>Content-Security-Policy</th>
+                        <td>
+                            {{ results.headers.content_security_policy or "Not Detected" }}
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <th>Strict-Transport-Security</th>
+                        <td>
+                            {{ results.headers.strict_transport_security or "Not Detected" }}
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <th>X-Content-Type-Options</th>
+                        <td>
+                            {{ results.headers.x_content_type_options or "Not Detected" }}
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <th>X-Frame-Options</th>
+                        <td>
+                            {{ results.headers.x_frame_options or "Not Detected" }}
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <th>Referrer-Policy</th>
+                        <td>
+                            {{ results.headers.referrer_policy or "Not Detected" }}
+                        </td>
+                    </tr>
+
+                </table>
+
+            </div>
+
+        </div>
+
+
+        <!-- SSL/TLS -->
+
+        <div class="card bg-dark border-danger text-light mb-4">
+
+            <div class="card-body">
+
+                <h3 class="text-danger">SSL/TLS Certificate</h3>
+
+                <table class="table table-dark table-bordered">
+
+                    <tr>
+                        <th>Subject</th>
+                        <td>{{ results.ssl.subject }}</td>
+                    </tr>
+
+                    <tr>
+                        <th>Issuer</th>
+                        <td>{{ results.ssl.issuer }}</td>
+                    </tr>
+
+                    <tr>
+                        <th>Valid From</th>
+                        <td>{{ results.ssl.valid_from }}</td>
+                    </tr>
+
+                    <tr>
+                        <th>Valid Until</th>
+                        <td>{{ results.ssl.valid_until }}</td>
+                    </tr>
+
+                </table>
+
+            </div>
+
+        </div>
+
+
+        <!-- DNS ENUMERATION -->
+
+        <div class="card bg-dark border-danger text-light mb-4">
+
+            <div class="card-body">
+
+                <h3 class="text-danger">DNS Enumeration</h3>
+
+                <h5>A Records</h5>
+
+                <ul>
+                    {% for record in results.dns.A %}
+                        <li>{{ record }}</li>
+                    {% endfor %}
+                </ul>
+
+                <h5>MX Records</h5>
+
+                <ul>
+                    {% for record in results.dns.MX %}
+                        <li>{{ record }}</li>
+                    {% endfor %}
+                </ul>
+
+                <h5>NS Records</h5>
+
+                <ul>
+                    {% for record in results.dns.NS %}
+                        <li>{{ record }}</li>
+                    {% endfor %}
+                </ul>
+
+                <h5>TXT Records</h5>
+
+                <ul>
+                    {% for record in results.dns.TXT %}
+                        <li>{{ record }}</li>
+                    {% endfor %}
+                </ul>
+
+            </div>
+
+        </div>
+
+
+        <!-- SECURITY FINDINGS -->
+
+        <div class="card bg-dark border-danger text-light mb-4">
+
+            <div class="card-body">
+
+                <h3 class="text-danger">Security Findings</h3>
+
+                {% if results.findings %}
+
+                    {% for finding in results.findings %}
+
+                        <div class="border border-secondary rounded p-3 mb-3">
+
+                            <h4>{{ finding.title }}</h4>
+
+                            <p>
+                                <strong>Severity:</strong>
+                                {{ finding.severity }}
+                            </p>
+
+                            <p>
+                                <strong>Evidence:</strong><br>
+                                {{ finding.evidence }}
+                            </p>
+
+                            <p>
+                                <strong>Impact:</strong><br>
+                                {{ finding.impact }}
+                            </p>
+
+                            <p>
+                                <strong>Recommendation:</strong><br>
+                                {{ finding.recommendation }}
+                            </p>
+
+                            {% if finding.cve_id %}
+
+                                <hr>
+
+                                <h5 class="text-warning">
+                                    CVE Details
+                                </h5>
+
+                                <p>
+                                    <strong>CVE:</strong>
+                                    {{ finding.cve_id }}
+                                </p>
+
+                                <p>
+                                    <strong>CVSS:</strong>
+                                    {{ finding.cvss_score }}
+                                </p>
+
+                                <p>
+                                    <strong>Product:</strong>
+                                    {{ finding.product }}
+                                </p>
+
+                                <p>
+                                    <strong>Version:</strong>
+                                    {{ finding.version }}
+                                </p>
+
+                            {% endif %}
+
+                        </div>
+
+                    {% endfor %}
+
+                {% else %}
+
+                    <p>No security findings identified.</p>
+
+                {% endif %}
+
+            </div>
+
+        </div>
+
+
     {% endif %}
 
-    <a href="/" class="btn btn-secondary mt-4">
-        Back
-    </a>
+
+    <div class="text-center mt-4 mb-5">
+
+        <a href="/" class="btn btn-secondary">
+            Back
+        </a>
+
+    </div>
 
 </div>
 
