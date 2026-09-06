@@ -15,3 +15,19 @@ def test_parse_http_banner():
     assert result["status"] == "200"
     assert result["server"] == "nginx"
 
+def test_parse_http_banner_without_version():
+    banner = (
+        "HTTP/1.1 200 OK\r\n"
+        "Server: cloudflare\r\n"
+        "Content-Type: text/html\r\n"
+        "\r\n"
+    )
+
+    result = parse_http_banner(banner)
+
+    assert result["service"] == "HTTP"
+    assert result["status"] == "200"
+    assert result["server"] == "cloudflare"
+    assert result["version"] == "Unknown"
+    assert result["version_detected"] is False
+    assert result["version_source"] == "Not disclosed"
