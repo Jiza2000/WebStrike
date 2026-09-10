@@ -12,7 +12,9 @@
         }
 
         .container {
+            width: 100%;
             max-width: 1100px;
+            box-sizing: border-box;
             margin: auto;
             background: white;
             padding: 35px;
@@ -80,11 +82,49 @@
             margin-top: 25px;
         }
 
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 15px;
-        }
+    table {
+    width: 100%;
+    table-layout: fixed;
+    border-collapse: collapse;
+    margin-top: 15px;
+}
+th,
+td {
+    padding: 8px;
+    border: 1px solid #ddd;
+    overflow-wrap: anywhere;
+    word-break: break-word;
+    font-size: 14px;
+}
+.service-detection-table th:nth-child(1),
+.service-detection-table td:nth-child(1) {
+    width: 8%;
+}
+
+.service-detection-table th:nth-child(2),
+.service-detection-table td:nth-child(2) {
+    width: 14%;
+}
+
+.service-detection-table th:nth-child(3),
+.service-detection-table td:nth-child(3) {
+    width: 18%;
+}
+
+.service-detection-table th:nth-child(4),
+.service-detection-table td:nth-child(4) {
+    width: 14%;
+}
+
+.service-detection-table th:nth-child(5),
+.service-detection-table td:nth-child(5) {
+    width: 20%;
+}
+
+.service-detection-table th:nth-child(6),
+.service-detection-table td:nth-child(6) {
+    width: 26%;
+}
 
         th {
             background: #222;
@@ -359,7 +399,7 @@
 
 <h2>Service Detection</h2>
 
-<table>
+<table class="service-detection-table">
 
     <tr>
         <th>Port</th>
