@@ -7,6 +7,13 @@ WebStrike automates multiple reconnaissance and security assessment tasks and co
 ---
 
 ## Features
+## Screenshots
+
+### Scan Results
+
+WebStrike displays target information and discovered open and closed ports after completing an assessment.
+
+![WebStrike Scan Results](docs/screenshots/scan-results.png)
 
 ### Target Analysis
 - Target URL validation
