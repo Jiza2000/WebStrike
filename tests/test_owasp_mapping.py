@@ -11,8 +11,8 @@ def test_header_finding_maps_to_misconfiguration():
     assert category["label"] == "A02:2025 Security Misconfiguration"
 
 
-def test_http_port_maps_to_cryptographic_failures():
-    assert get_owasp_category("HTTP Port Exposed")["id"] == "A04:2025"
+def test_http_port_maps_to_security_misconfiguration():
+    assert get_owasp_category("HTTP Port Exposed")["id"] == "A02:2025"
 
 
 def test_cve_title_maps_to_supply_chain():

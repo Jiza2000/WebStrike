@@ -20,7 +20,7 @@ OWASP_TOP_10_2025 = {
 
 # Exact finding title -> OWASP category ID
 TITLE_TO_OWASP = {
-    "HTTP Port Exposed": "A04",
+    "HTTP Port Exposed": "A02",
     "Content Security Policy Missing": "A02",
     "X-Content-Type-Options Header Missing": "A02",
     "Strict-Transport-Security Header Missing": "A02",
