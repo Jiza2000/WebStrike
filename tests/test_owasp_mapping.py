@@ -36,3 +36,24 @@ def test_analyze_risks_tags_findings():
 
     assert findings
     assert all(f["owasp"] is not None for f in findings)
+
+
+def test_summarize_by_category_groups_and_ranks_severity():
+    from modules.owasp_mapping import summarize_by_category
+
+    findings = [
+        {"severity": "Low", "owasp": get_owasp_category("Referrer-Policy Header Missing")},
+        {"severity": "Medium", "owasp": get_owasp_category("Content Security Policy Missing")},
+        {"severity": "High", "owasp": get_owasp_category("SSL Certificate Expired")},
+        {"severity": "Low", "owasp": None},
+    ]
+
+    summary = summarize_by_category(findings)
+
+    assert [s["label"] for s in summary] == [
+        "A02:2025 Security Misconfiguration",
+        "A04:2025 Cryptographic Failures",
+    ]
+    assert summary[0]["count"] == 2
+    assert summary[0]["highest_severity"] == "Medium"
+    assert summary[1]["highest_severity"] == "High"

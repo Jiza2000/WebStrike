@@ -1,6 +1,7 @@
 import json
 from jinja2 import Environment, FileSystemLoader
 from datetime import datetime, timezone
+from modules.owasp_mapping import summarize_by_category
 
 def generate_json_report(results):
     with open("reports/report.json", "w") as file:
@@ -78,6 +79,7 @@ def generate_html_report(results):
         findings=results["findings"],
         screenshot="screenshot.png" if results.get("screenshot") else None,
         severity_counts=severity_counts,
+        owasp_summary=summarize_by_category(results["findings"]),
         overall_risk=overall_risk,
         risk_score=risk_score,
         ssl_status=ssl_status

@@ -57,6 +57,39 @@ def get_owasp_category(title):
     }
 
 
+_SEVERITY_ORDER = ["Informational", "Low", "Medium", "High", "Critical"]
+
+
+def summarize_by_category(findings):
+    """Group findings by OWASP category.
+
+    Returns a list sorted by category ID:
+    [{"label", "count", "highest_severity"}, ...]
+    Unmapped findings are skipped.
+    """
+    groups = {}
+
+    for finding in findings:
+        owasp = finding.get("owasp")
+        if not owasp:
+            continue
+
+        severity = str(finding.get("severity", "Informational")).strip().capitalize()
+        if severity not in _SEVERITY_ORDER:
+            severity = "Informational"
+
+        group = groups.setdefault(
+            owasp["id"],
+            {"label": owasp["label"], "count": 0, "highest_severity": severity},
+        )
+        group["count"] += 1
+
+        if _SEVERITY_ORDER.index(severity) > _SEVERITY_ORDER.index(group["highest_severity"]):
+            group["highest_severity"] = severity
+
+    return [groups[key] for key in sorted(groups)]
+
+
 def tag_findings(findings):
     """Add an 'owasp' field to each finding (None if unmapped)."""
     for finding in findings:

@@ -327,6 +327,13 @@ Scan Results
                                 {{ finding.severity }}
                             </p>
 
+                            {% if finding.owasp %}
+                            <p>
+                                <strong>OWASP Top 10:</strong>
+                                {{ finding.owasp.label }}
+                            </p>
+                            {% endif %}
+
                             <p>
                                 <strong>Evidence:</strong><br>
                                 {{ finding.evidence }}

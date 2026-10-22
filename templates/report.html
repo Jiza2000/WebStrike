@@ -188,6 +188,29 @@ td {
             border-left-color: #28a745;
         }
 
+        .owasp-badge {
+            display: inline-block;
+            padding: 2px 8px;
+            border-radius: 4px;
+            background: #e8eef7;
+            color: #1f3a66;
+            font-size: 13px;
+            font-weight: bold;
+        }
+
+        .owasp-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        .owasp-table th,
+        .owasp-table td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+
         .finding-title {
             margin-top: 0;
             font-size: 20px;
@@ -346,6 +369,32 @@ td {
         </div>
 
     </div>
+
+    {% if owasp_summary %}
+    <h3>OWASP Top 10:2025 Coverage of Findings</h3>
+
+    <table class="owasp-table">
+        <tr>
+            <th>Category</th>
+            <th>Findings</th>
+            <th>Highest Severity</th>
+        </tr>
+        {% for item in owasp_summary %}
+        <tr>
+            <td>{{ item.label }}</td>
+            <td>{{ item.count }}</td>
+            <td>{{ item.highest_severity }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+
+    <p class="section-note">
+        WebStrike maps only the findings it detects automatically. Categories
+        not listed (for example Broken Access Control, Injection, and
+        Authentication Failures) require authenticated or application-specific
+        testing and are not assessed by this scan.
+    </p>
+    {% endif %}
 </section>
 
 
@@ -618,6 +667,13 @@ td {
                         {{ finding.severity }}
                     </span>
                 </p>
+
+                {% if finding.owasp %}
+                <p>
+                    <strong>OWASP Top 10:</strong>
+                    <span class="owasp-badge">{{ finding.owasp.label }}</span>
+                </p>
+                {% endif %}
                 {% if finding.cve_id %}
 
 <h4>CVE Details</h4>
