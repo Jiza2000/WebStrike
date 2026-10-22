@@ -1,4 +1,5 @@
 from datetime import datetime, timezone
+from modules.owasp_mapping import tag_findings
 
 def create_finding(title, severity, evidence, impact, recommendation):
     return {
@@ -164,4 +165,4 @@ def analyze_risks(results):
 
             findings.append(finding)
 
-    return findings
+    return tag_findings(findings)
